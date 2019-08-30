@@ -6,7 +6,6 @@ import 'dart:async';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui';
 import 'dart:io';
-import 'package:flutter/rendering.dart';
 import 'dart:typed_data';
 /* Bar Code Scanner */
 import 'package:barcode_scan/barcode_scan.dart';
@@ -83,22 +82,22 @@ class _MyHomePageState extends State<MyHomePage> {
   /* QR Generator */
 
   Future<void> _captureAndSharing() async {
-    try{
-      RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
-      var image = await boundary.toImage();
-      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
-      Uint8List pngByte = byteData.buffer.asUint8List();
+    // try{
+    //   RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
+    //   var image = await boundary.toImage();
+    //   ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+    //   Uint8List pngByte = byteData.buffer.asUint8List();
 
-      final tempDir = await getTemporaryDirectory();
-      final file = await new File('${tempDir.path}/image.png').create();
-      await file.writeAsBytes(pngByte);
+    //   final tempDir = await getTemporaryDirectory();
+    //   final file = await new File('${tempDir.path}/image.png').create();
+    //   await file.writeAsBytes(pngByte);
 
-      final channel = const MethodChannel('channel:me.alfian.share/share');
-      channel.invokeMethod('shareFile', 'image.png');
+    //   final channel = const MethodChannel('channel:me.alfian.share/share');
+    //   channel.invokeMethod('shareFile', 'image.png');
 
-    } catch (e) {
-      print(e.toString());
-    }
+    // } catch (e) {
+    //   print(e.toString());
+    // }
   }
 
   @override
