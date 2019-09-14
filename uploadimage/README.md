@@ -9,7 +9,6 @@ Code below.
 
 ## Concat Token.
 
-(
 
     Map<String, String> headers = {
 
@@ -20,10 +19,8 @@ Code below.
     };
 
     request.headers.addAll(headers);
-    
-)
 
-(
+##Upload and define header
 
      Future upLoadImage(File image) async {
 
@@ -80,8 +77,6 @@ Code below.
       print(responses.data);
 
      }
-    
-)
 
 - [Resize Image](https://stackoverflow.com/questions/52603614/flutter-resize-image-before-upload?answertab=votes#tab-top)
 
