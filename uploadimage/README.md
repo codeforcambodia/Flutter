@@ -6,7 +6,7 @@ It will uses -[MultipartRequest](https://pub.dev/documentation/http/latest/http/
 
 Code below.
 
-Future upLoadImage(File image) async {
+(Future upLoadImage(File image) async {
 
   /* Work fine but complicate */
 
@@ -60,7 +60,7 @@ Future upLoadImage(File image) async {
 
   print(responses.data);
 
-}
+})
 
 ## Concat Token
 
