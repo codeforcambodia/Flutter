@@ -11,76 +11,75 @@ Code below.
 
 (
 
-  Map<String, String> headers = {
+    Map<String, String> headers = {
+
+      'Authorization': 'Bearer {Your_token}',
+
+      "Content-Type": "multipart/form-data",
+
+    };
+
+    request.headers.addAll(headers);
     
-    'Authorization': 'Bearer {Your_token}',
-
-    "Content-Type": "multipart/form-data",
-
-  };
-
-  request.headers.addAll(headers);
-  
-  
 )
 
 (
 
-   Future upLoadImage(File image) async {
+     Future upLoadImage(File image) async {
 
-    /* Work fine but complicate */
+      /* Work fine but complicate */
 
-    img.Image imageTemp = img.decodeImage
+      img.Image imageTemp = img.decodeImage
 
-    (image.readAsBytesSync());
+      (image.readAsBytesSync());
 
-    img.Image resizedImg = img.copyResize(imageTemp, width: 800);
+      img.Image resizedImg = img.copyResize(imageTemp, width: 800);
 
-    var request = new http.MultipartRequest(
+      var request = new http.MultipartRequest(
 
-      'POST',
+        'POST',
 
-      Uri.parse('$_urlPostImage/uploadoc'),
+        Uri.parse('$_urlPostImage/uploadoc'),
 
-    );
+      );
 
-    var multipartFile = new http.MultipartFile.fromBytes(
+      var multipartFile = new http.MultipartFile.fromBytes(
 
-      'file',
+        'file',
 
-      img.encodeJpg(resizedImg),
+        img.encodeJpg(resizedImg),
 
-      filename: 'resized_image.jpg',
+        filename: 'resized_image.jpg',
 
-      contentType: MediaType.parse('image/jpeg'),
+        contentType: MediaType.parse('image/jpeg'),
 
-    );
+      );
 
-    request.files.add(multipartFile);
+      request.files.add(multipartFile);
 
-    var response = await request.send();
+      var response = await request.send();
 
-    print(response.statusCode);
+      print(response.statusCode);
 
-    response.stream.transform(utf8.decoder).listen((value) {
+      response.stream.transform(utf8.decoder).listen((value) {
 
-      print(value);
+        print(value);
 
-    });
+      });
 
-    Response responses = await dio.post(
+      Response responses = await dio.post(
 
-      "$_urlPostImage/uploadoc", 
+        "$_urlPostImage/uploadoc", 
 
-      data: formData, 
+        data: formData, 
 
-      options: Options(contentType: ContentType('Content-Type', 'multipart/form-data'))
+        options: Options(contentType: ContentType('Content-Type', 'multipart/form-data'))
 
-    );
+      );
 
-    print(responses.data);
+      print(responses.data);
 
-   }
+     }
     
 )
 
