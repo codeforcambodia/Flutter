@@ -6,61 +6,63 @@ It will uses -[MultipartRequest](https://pub.dev/documentation/http/latest/http/
 
 Code below.
 
-(Future upLoadImage(File image) async {
+(
+  Future upLoadImage(File image) async {
 
-  /* Work fine but complicate */
+    /* Work fine but complicate */
 
-  img.Image imageTemp = img.decodeImage
+    img.Image imageTemp = img.decodeImage
 
-  (image.readAsBytesSync());
-  
-  img.Image resizedImg = img.copyResize(imageTemp, width: 800);
+    (image.readAsBytesSync());
 
-  var request = new http.MultipartRequest(
+    img.Image resizedImg = img.copyResize(imageTemp, width: 800);
 
-    'POST',
+    var request = new http.MultipartRequest(
 
-    Uri.parse('$_urlPostImage/uploadoc'),
+      'POST',
 
-  );
+      Uri.parse('$_urlPostImage/uploadoc'),
 
-  var multipartFile = new http.MultipartFile.fromBytes(
+    );
 
-    'file',
+    var multipartFile = new http.MultipartFile.fromBytes(
 
-    img.encodeJpg(resizedImg),
+      'file',
 
-    filename: 'resized_image.jpg',
+      img.encodeJpg(resizedImg),
 
-    contentType: MediaType.parse('image/jpeg'),
+      filename: 'resized_image.jpg',
 
-  );
+      contentType: MediaType.parse('image/jpeg'),
 
-  request.files.add(multipartFile);
+    );
 
-  var response = await request.send();
+    request.files.add(multipartFile);
 
-  print(response.statusCode);
+    var response = await request.send();
 
-  response.stream.transform(utf8.decoder).listen((value) {
+    print(response.statusCode);
 
-    print(value);
-    
-  });
+    response.stream.transform(utf8.decoder).listen((value) {
 
-  Response responses = await dio.post(
+      print(value);
 
-    "$_urlPostImage/uploadoc", 
-    
-    data: formData, 
-    
-    options: Options(contentType: ContentType('Content-Type', 'multipart/form-data'))
-  
-  );
+    });
 
-  print(responses.data);
+    Response responses = await dio.post(
 
-})
+      "$_urlPostImage/uploadoc", 
+
+      data: formData, 
+
+      options: Options(contentType: ContentType('Content-Type', 'multipart/form-data'))
+
+    );
+
+    print(responses.data);
+
+  }
+)
 
 ## Concat Token
 
