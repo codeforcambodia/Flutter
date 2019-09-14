@@ -6,6 +6,22 @@ It will uses -[MultipartRequest](https://pub.dev/documentation/http/latest/http/
 
 Code below.
 
+
+## Concat Token
+
+(
+  Map<String, String> headers = {
+    
+    'Authorization': 'Bearer {Your_token}',
+
+    "Content-Type": "multipart/form-data",
+
+  };
+
+  request.headers.addAll(headers);
+  
+)
+
 (
   Future upLoadImage(File image) async {
 
@@ -63,18 +79,6 @@ Code below.
 
   }
 )
-
-## Concat Token
-
-  Map<String, String> headers = {
-    
-    'Authorization': 'Bearer {Your_token}',
-
-    "Content-Type": "multipart/form-data",
-
-  };
-
-  request.headers.addAll(headers);
 
 - [Resize Image](https://stackoverflow.com/questions/52603614/flutter-resize-image-before-upload?answertab=votes#tab-top)
 
