@@ -6,6 +6,8 @@ It will uses -[MultipartRequest](https://pub.dev/documentation/http/latest/http/
 
 Code below.
 
+- [Resize Image](https://stackoverflow.com/questions/52603614/flutter-resize-image-before-upload?answertab=votes#tab-top)
+
 ## Initialize Multipart Request
 
     var request = new http.MultipartRequest(
@@ -96,6 +98,4 @@ Code below.
       print(responses.data);
 
      }
-
-- [Resize Image](https://stackoverflow.com/questions/52603614/flutter-resize-image-before-upload?answertab=votes#tab-top)
 
