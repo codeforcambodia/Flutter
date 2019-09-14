@@ -6,6 +6,16 @@ It will uses -[MultipartRequest](https://pub.dev/documentation/http/latest/http/
 
 Code below.
 
+## Initialize Multipart Request
+
+    var request = new http.MultipartRequest(
+
+    'POST',
+
+    Uri.parse('$_urlPostImage/uploadoc'),
+
+    );
+
 
 ## Concat Token.
 
@@ -20,11 +30,18 @@ Code below.
 
     request.headers.addAll(headers);
 
-## Upload and define header
+## Complete Code.
 
      Future upLoadImage(File image) async {
 
       /* Work fine but complicate */
+      Map<String, String> headers = {
+
+        'Authorization': 'Bearer {Your_token}',
+
+        "Content-Type": "multipart/form-data",
+
+      };
 
       img.Image imageTemp = img.decodeImage
 
@@ -52,6 +69,8 @@ Code below.
 
       );
 
+      request.headers.addAll(headers);
+      
       request.files.add(multipartFile);
 
       var response = await request.send();
