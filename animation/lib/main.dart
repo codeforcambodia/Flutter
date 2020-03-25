@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/animation.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,7 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   int _counter = 0;
-  Animation animation;
+  Animation animation, delayedAnimation, muchDelayedAnimation;
   AnimationController animationController;
 
   @override
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     super.initState();
     animationController = AnimationController(duration: Duration(seconds: 2), vsync: this);
     animation = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
-      curve: Curves.fastOutSlowIn, parent: animationController
+      curve: Curves.bounceIn, parent: animationController
     ));
     animationController.forward();
   }
@@ -90,10 +91,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           // ),
           body: Transform(
             transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
-              child: Center(
+            child: Center(
               // Center is a layout widget. It takes a single child and positions it
               // in the middle of the parent.
-              child: Column(
+              child: Container(
+                padding: EdgeInsets.all(25.0),
+                child: Column(
                 // Column is also a layout widget. It takes a list of children and
                 // arranges them vertically. By default, it sizes itself to fit its
                 // children horizontally, and tries to be as tall as its parent.
@@ -108,16 +111,50 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 // center the children vertically; the main axis here is the vertical
                 // axis because Columns are vertical (the cross axis would be
                 // horizontal).
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 25.0
+                      ),
+                    ),
+                    SizedBox(height: 15.0,),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Username'
+                      ),
+                    ),
+                    SizedBox(height: 15.0,),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                      ),
+                      obscureText: true
+                    ),
+                    SizedBox(height: 20.0,),
+                    RaisedButton(
+                      child: Text("Login"),
+                      onPressed: (){},
+                      color: Colors.lightBlue,
+                      elevation: 7.0,
+                      textColor: Colors.white,
+                    ),
+                    SizedBox(height: 20.0,),
+                    Text('Don\'t have an account?'),
+                    OutlineButton(
+                      child: Text('Signup'),
+                      onPressed: (){},
+                      color: Colors.lightGreen,
+                      textColor: Colors.green,
+                      highlightColor: Colors.green,
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                        width: 0.5
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
