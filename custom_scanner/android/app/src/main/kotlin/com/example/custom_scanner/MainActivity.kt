@@ -1,4 +1,4 @@
-package com.example.fabs
+package com.example.custom_scanner
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

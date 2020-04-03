@@ -1,4 +1,4 @@
-# fabs
+# custom_scanner
 
 A new Flutter project.
 
