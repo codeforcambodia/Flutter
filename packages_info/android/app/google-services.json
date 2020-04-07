@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "18201148233",
+    "firebase_url": "https://flutter-notify-update.firebaseio.com",
+    "project_id": "flutter-notify-update",
+    "storage_bucket": "flutter-notify-update.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18201148233:android:15a165d7f04ab24e5df898",
+        "android_client_info": {
+          "package_name": "com.example.packages_info"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18201148233-sjt8tcbsdijdq5ghr8p90t59bgbb5g5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8mvaQ1wU08GlTELqu_f1NWHeP-2fImec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18201148233-sjt8tcbsdijdq5ghr8p90t59bgbb5g5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
