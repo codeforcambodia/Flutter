@@ -2,6 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,17 +49,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  var _packageInfo;
+  PackageInfo _packageInfo;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    _launchURL("https://play.google.com/store/apps/details?id=com.supercell.clashofclans");
   }
 
   @override
@@ -69,18 +63,30 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void packageInformation() async {
-    PackageInfo  _packageInfo = await PackageInfo.fromPlatform();
+    _packageInfo = await PackageInfo.fromPlatform();
     print(_packageInfo.appName);
     print(_packageInfo.packageName);
     print(_packageInfo.buildNumber);
     print(_packageInfo.version);
   }
 
+  void _launchURL(String url) async {
+    if (await canLaunch(url)){
+      await launch(url);
+    } else {
+      print("Cannot launch");
+    }
+  }
+
   void _checkUpdate() async {
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
     await remoteConfig.fetch(expiration: const Duration(seconds: 3));
     await remoteConfig.activateFetched();
-    print(remoteConfig.getString('android_app_version'));
+    if (remoteConfig.getString('android_app_version') == (_packageInfo.version+"+${_packageInfo.buildNumber}")){
+      print("Equal");
+    } else {
+      print("Not equal");
+    }
   }
 
   Widget _infoTile(String title, String subtitle) {
