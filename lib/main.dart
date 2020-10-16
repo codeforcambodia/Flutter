@@ -1,13 +1,46 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/scheduler.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// // import 'package:flutter/scheduler.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'dart:io' show Platform;
 
-void main() {
-  runApp(MyApp());
+import 'package:local_notification/custrom_notification.dart';
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseApp app;
+
+  try {
+
+    print(Firebase.apps);
+    app = await Firebase.initializeApp(
+      name: "local_notification",
+      options: FirebaseOptions(
+        appId: '1:367208051911:android:2029a2966071004ed4bae2"',
+        apiKey: 'AIzaSyAVZb9M5TEqNOepLtiPSLvw7_0mt-WC0s8',
+        messagingSenderId: '367208051911',
+        projectId: 'notification-98c25',
+        databaseURL: 'https://notification-98c25.firebaseio.com',
+      )
+    );
+    
+  } catch (e) {
+    print(e.message);
+    app = Firebase.apps[1];
+  }
+
+  runApp(MyApp(app: app));
 }
 
 class MyApp extends StatelessWidget {
+
+  final FirebaseApp app;
+
+  MyApp({this.app});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -17,115 +50,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page', app: app),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  AndroidInitializationSettings _androidInitializationSettings;
-  IOSInitializationSettings _iosInitializationSettings;
-  InitializationSettings _initializationSettings;
-
-  @override
-  void initState(){
-    super.initState();
-    initializing();
-  }
-
-  void initializing() async {
-    _androidInitializationSettings = AndroidInitializationSettings('app_icon');
-    _iosInitializationSettings = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveNotification);
-    _initializationSettings = InitializationSettings(android: _androidInitializationSettings, iOS: _iosInitializationSettings);
-    await _flutterLocalNotificationsPlugin.initialize(_initializationSettings, onSelectNotification: onSelectionNotification);
-  }
-
-  void _showNotification() async {
-    await notification();
-  }
-  
-  Future<void> notification() async {
-    AndroidNotificationDetails androidNotificationDetails = new AndroidNotificationDetails(
-      'Channel ID',
-      'Channel title',
-      'channel body',
-      importance: Importance.max,
-    );
-
-    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-
-    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
-
-    await _flutterLocalNotificationsPlugin.show(0, "Hello there", "Please love me", notificationDetails);
-  }
-
-  Future onSelectionNotification(String payload) async {
-    if (payload != null){
-      print(payload);
-    }
-
-    // Navigator.push(context, route)
-  }
-
-  Future onDidReceiveNotification(int id, String title, String body, String payload) async {
-    return CupertinoAlertDialog(
-      title: Text(title),
-      content: Text(body),
-      actions: [
-        CupertinoDialogAction(
-          isDefaultAction: true,
-          onPressed: (){
-            print("");
-          },
-          child: Text("Okay"),
-        )
-      ],
-    );
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showNotification,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
