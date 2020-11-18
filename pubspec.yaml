@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: notification
+=======
+name: local_notification
+>>>>>>> ea1f1136cfd46ca736d830bb11b5a93795349f0a
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -27,9 +31,18 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+<<<<<<< HEAD
   cupertino_icons: ^1.0.0
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1+4
+=======
+  cupertino_icons: ^0.1.3
+
+  flutter_local_notifications:
+  firebase_database:
+  firebase_core: any
+  http:
+>>>>>>> ea1f1136cfd46ca736d830bb11b5a93795349f0a
 
 dev_dependencies:
   flutter_test:
