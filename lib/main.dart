@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tutorial_flutter/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,76 +27,8 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  String _message = '';
-
-  @override
-  void initState() {
-    _registerOnFirebase();
-    _showNotification();
-    var androidInitialize = AndroidInitializationSettings('ic_launcher');
-    var iOSinitialize = IOSInitializationSettings();
-    var initializationSettings = InitializationSettings(android: androidInitialize, iOS: iOSinitialize);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: notificationSelected);
-    getMessage();
-    super.initState();
-  }
-
-  Future notificationSelected(String payload){
-
-  }
-
-  Future _showNotification() async {
-    var androidDetails = AndroidNotificationDetails("channel ID", "Daveat", "This is my love");
-    var iOSDetails = IOSNotificationDetails();
-    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iOSDetails);
-    await flutterLocalNotificationsPlugin.show(0, "Task", "Hey my love", generalNotificationDetails);
-  }
-
-  _registerOnFirebase() {
-    _firebaseMessaging.subscribeToTopic('all');
-    _firebaseMessaging.getToken().then((token) => print(token));
-  }
-
-  void getMessage() {
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-      print('received message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => _message = message["notification"]["body"]);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Push Notifications Test'),
-      ),
-      body: Container(
-          child: Center(
-        child: Text("Message: $_message"),
-      )),
-    );
-  }
-}
